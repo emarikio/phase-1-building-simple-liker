@@ -10,7 +10,7 @@ for (heart of likes) {
 }
 
 function addLike(event) {
-  targetHeart = event.Target;
+  targetHeart = event.target;
 
   mimicServerCall()
   .then(function (response) {
