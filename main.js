@@ -3,39 +3,28 @@ const EMPTY_HEART = '♡'
 const FULL_HEART = '♥'
 
 // Your JavaScript code goes here!
-document.addEventListener('DOMContentLoaded', () => {
-  const like = document.getElementById('like');
-  const errorModal = document.getElementById('errorModal');
+let likes = document.querySelectorAll('.like-glyph')
 
-  heartIcon.addEventListener('click', () => {
-    
-    if (like-glyph.classList.contains('EMPTY_HEART')) {
-      
-      mimicServerCall()
-        .then(() => {
-          
-          like-glyph.classList.remove('EMPTY_HEART');
-          like-glyph.classList.add('FULL_HEART');
-          
-          like-glyph.classList.add('activated-heart');
-        })
-        .catch(() => {
-          
-          errorModal.classList.remove('hidden');
-          
-          setTimeout(() => {
-            errorModal.classList.add('hidden');
-          }, 2000);
-        });
-    } else {
-      
-      like-glyph.classList.remove('FULL_HEART');
-      like-glyph.remove('activated-heart');
-      like-glyph.classList.add('EMPTY_HEART');
-    }
+for (heart of likes) {
+  heart.addEventListener('click', addLike)
+}
+
+function addLike(event) {
+  targetHeart = event.Target;
+
+  mimicServerCall()
+  .then(function (response) {
+    targetHeart.classList.add('activated-heart')
+    targetHeart.textContent = FULL_HEART;
+  })
+  .catch(function (error) {
+    document.querySelector('#modal').classList.remove('hidden')
+    setTimeout(function () {
+      document.querySelector('#modal').classList.add('hidden')
+
+    }, 1000)
   });
-});
-
+}
 
 
 //------------------------------------------------------------------------------
